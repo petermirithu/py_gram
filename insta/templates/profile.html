@@ -1,16 +1,47 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+{% endblock styles %}
 
 {% block content %}
   <div class="container">
-    <div class="row">
+    <div class="row">    
       <div class="col-md-6">
-      Pic
+      {% if user.userprofile.pic %}
+        <img class="rounded-circle"src="{{user.userprofile.pic.cdn_url}}" width="250px" height="250px" alt="Profile photo">
+      {% else %}
+        <p class="alert alert-danger">You have no Profile Pic</p>        
+      {% endif %}
       </div>
       <div class="col-md-6">            
-      Details
-        <a class="btn btn-outline-primary" href="/accounts/password/change">Change password</a>
-        eeee{{current_user}}
-      </div>
+        <div class="row">
+          <div class="col-md-8">
+            <h5>Username: {{user.username}}</h5>
+            <h5>Email: {{user.email}}</h5>
+            <hr>
+            <h6><b>Status</b></h6>              
+            {% if user.userprofile.status %}
+              <p>{{user.userprofile.status}}</p>
+            {% else %}  
+              <p class="alert alert-danger"> No status</p>
+            {% endif %}    
+            <br>                        
+            <h6><b>Career</b></h6>
+            {% if user.userprofile.status %}
+              <p>{{user.userprofile.career}}</p>
+            {% else %}  
+              <p class="alert alert-danger"> No Career</p>              
+            {% endif %}
+          </div>
+          <div class="col-md-4">            
+            <a class="btn btn-outline-success" href="{% url 'updateProfile' %}">Update profile</a>
+          </div>
+        </div>
+      </div>    
     </div>
     <div class="row">
       <h4>Posts</h4>
