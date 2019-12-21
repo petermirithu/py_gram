@@ -13,13 +13,18 @@
         </li>                                                                                                   
         <li>
           <form class="navbar-form" role='search' action="">
-            <input type="text" class="form-control" placeholder="Search" name="search_term">
-            <button type="submit" class="btn btn-outline-success">Search</button>            
+            <input type="text" class="form-control" placeholder="Search" name="search_term">            
+            <button style="" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>            
           </form>  
         </li>                                                                   
       </ul>
       <ul class="navbar-nav ml-auto">  
-        {% if user.is_authenticated %}        
+        {% if user.is_authenticated %} 
+          {% if user.userprofile.pic %}
+            <img class="rounded-circle"src="{{user.userprofile.pic.cdn_url}}" width="40px" height="40px"alt="Profile photo">
+          {% else %}
+            <p>{{request.user.username}}</p>
+          {% endif %}          
           <a class="nav-link btn btn-outline-secondary" href="{% url 'profile' %}">Profile</a>
           <a class="nav-link btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>          
         {% else %}
