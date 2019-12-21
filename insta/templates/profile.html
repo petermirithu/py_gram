@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+      Pic
+      </div>
+      <div class="col-md-6">            
+      Details
+        <a class="btn btn-outline-primary" href="/accounts/password/change">Change password</a>
+        eeee{{current_user}}
+      </div>
+    </div>
+    <div class="row">
+      <h4>Posts</h4>
+    </div>
+  </div>
+{% endblock content %}
