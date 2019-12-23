@@ -2,6 +2,11 @@
 {% load bootstrap4 %}
 {% load static %}
 
+{% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">    
+{% endblock styles %}
+
 {% block content %}
   <div class="container">
     <div class="row">    
@@ -33,15 +38,26 @@
             {% endif %}
           </div>
           <div class="col-md-4">            
-            <a class="btn btn-outline-success" href="{% url 'updateProfile' %}">Update profile</a>
+            <div class="button" id="button-6">
+              <div id="spin"></div>                
+                <a href="{% url 'updateProfile' %}">Update profile</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>    
     </div>
+    <hr>
+    <h4>Posts</h4>
     <div class="row">
-      <h4>Posts</h4>
+    {% for post in posts %} 
+      <a href="/single_post/{{post.id}}">
+      <img src="{{post.image.cdn_url}}" style="margin-left:10px"width="250px" height="300px"alt="{{post.image_name}}">                                    
+      </a>
+      <br>      
+    {% endfor %}
     </div>
-  </div>
+  </div>  
 {% endblock content %}
   
 
