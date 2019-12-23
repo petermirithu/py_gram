@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from pyuploadcare.dj.models import ImageField
-from PIL import Image 
-
+from tinymce.models import HTMLField
 # Create your models here.
 class UserProfile(models.Model):
   '''
@@ -15,6 +14,77 @@ class UserProfile(models.Model):
 
   def __str__(self):
     return self.user.username  
+
+class likes(models.Model):
+  '''
+  class that defines the number of likes per post
+  '''  
+  likes=models.IntegerField()  
+
+  def __str__(self):
+    return self.likes
+
+
+class ImagePost(models.Model):
+  '''
+  class that defines how post details are to be stored in the database
+  '''
+  image=ImageField(blank=True,manual_crop='')
+  image_name=models.CharField(max_length=50)
+  caption=HTMLField()
+  posted_by=models.ForeignKey(User, on_delete=models.CASCADE)
+  posted_on=models.DateField(auto_now_add=True)
+
+  class Meta:
+    ordering=['posted_on']    
+
+  def __str__(self):
+    return self.image_name  
+
+  @classmethod
+  def get_images_all(cls):
+    '''
+    function that gets all images posted
+    '''    
+    posts=cls.objects.order_by('-posted_on')
+    return posts
+
+  @classmethod
+  def single_image(cls,image_id):
+    '''
+    function gets a single image posted by id
+    '''
+    image_posted=cls.objects.get(id=image_id)
+    return image_posted
+
+  @classmethod
+  def get_image_id(cls,imageId):
+    '''
+    function that gets an image id    
+    '''
+    image_id=cls.objects.filter(id=imageId)
+    return image_id
+
+class Comments(models.Model):
+  '''
+  class that defines how comments for a post are to be stored
+  '''
+  body=models.CharField(max_length=1000)
+  image_id=models.ForeignKey(ImagePost, on_delete=models.CASCADE)
+  posted_by=models.ForeignKey(User, on_delete=models.CASCADE)
+  posted_on=models.DateField(auto_now_add=True)
+
+  def __str__(self):
+    return self.posted_by
+
+  @classmethod
+  def get_user_comments(cls, id):
+    '''
+    function that gets all comments
+    '''
+    comments=cls.objects.filter(image_id__in=id)
+    return comments
+
 
 
 
