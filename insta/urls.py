@@ -9,4 +9,7 @@ urlpatterns = [
     url(r'^update_profile/$',views.update_profile,name="updateProfile"),  
     url(r'^new_post/$',views.new_post,name="newPost"),
     path('single_post/<int:id>',views.single_post,name="singlePost"),
+    url(r"^like/$",views.like_post,name="like_post"),
+    url(r"^follow/$",views.follow_user,name="follow_user"),
+    path('user/<username>',views.others_profile,name="otherProfile"),
 ]
