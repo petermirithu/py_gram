@@ -1,0 +1,41 @@
+/* comment button */
+#button-7 {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all .5s ease-Out;
+  border-color: transparent black transparent black;  
+
+}
+
+#button-7 a {
+  position: relative;
+  left: 0;
+  transition: all .5s ease-Out;
+}
+
+#dub-arrow {
+  width: 100%;
+  height: 100%;
+  border-radius: 0px 35px 0px 35px;
+  background: white;
+  left: -200px;
+  position: absolute;
+  color: black;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .4s ease-Out;  
+}
+#button-7:hover{
+  transform: translateX( -10px); 
+  transition: all .5s ease-Out;
+  background-color: black;
+}
+#button-7:hover #dub-arrow {
+  left: 0;
+}
+#button-7 #dub-arrow a{
+  left: 150px; 
+  color: black;
+}
