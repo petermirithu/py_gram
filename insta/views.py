@@ -6,6 +6,8 @@ from .forms import UpdateProfileForm,UserUpdateForm,ImagePostForm,ImageCommentFo
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404,HttpResponseRedirect,HttpResponse
+from django.contrib import auth
+
 def home(request):
   '''
   view function that renders the home page
@@ -25,8 +27,9 @@ def profile(request):
   '''
   view function that renders profile page
   '''
-  title="Profile"      
-  return render(request,'profile.html',{"title":title})
+  title="Profile"    
+  posts=ImagePost.get_user_posts(request.user.id)    
+  return render(request,'profile.html',{"title":title,"posts":posts})
 
 @login_required(login_url="/accounts/login/")
 def update_profile(request):
