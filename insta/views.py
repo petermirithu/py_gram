@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib import auth
+from django.shortcuts import get_object_or_404
 
 def home(request):
   '''
@@ -96,5 +97,35 @@ def single_post(request, id):
       
   return render(request,'single_post.html',{"form":form,"comments":comments,"post":image_posted})      
 
+@login_required(login_url="/accounts/login/")
+def like_post(request):
+  '''
+  function that add a user to like field when he/she likes a post
+  '''
+  post=get_object_or_404(ImagePost, id=request.POST.get('post_id'))  
+  post.likes.add(request.user)      
+  return redirect('Home')
+
+@login_required(login_url="/accounts/login/")
+def follow_user(request):
+  '''
+  function that adds a user to follow field when he/she followers another user
+  '''
+  follow=get_object_or_404(UserProfile,id=request.POST.get('user_id'))
+  follow.followers.add(request.user)
+  print("*****************************************************")
+  print(f'{follow}')
+  print(f'{request.user}')
+  print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+  return redirect('Home')
+
+def others_profile(request, username):
+  '''
+  view function that renders other users profile page
+  '''
+  other_user=User.objects.get(username=username)
+  title=other_user.username
+  posts=ImagePost.get_user_posts(other_user.id)   
+  return render(request,'others_profile.html',{"title":title,"posts":posts,"other_user":other_user}) 
 
 
