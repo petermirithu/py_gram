@@ -14,12 +14,12 @@
           {% autoescape on %}
             <h6>{{post.caption|safe}}</h6>
           {% endautoescape %}
-          <p>Posted by: {{post.posted_by}}</p>
-          <p>Posted on: {{post.posted_on}}</p>
         </div>                
         <div class="card-footer">
-          <p>Like </p>
-          <p>Comments</p>              
+          <p>Posted by: {{post.posted_by}}</p>
+          <p>Posted on: {{post.posted_on}}</p>
+          <p>Likes </p>
+          <p>Comments: {{comments|length}}</p>              
         </div>  
       </div>  
     </div>    
