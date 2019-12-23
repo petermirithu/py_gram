@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">    
+{% endblock styles %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">    
+      <div class="col-md-6">
+      {% if user.userprofile.pic %}
+        <img class="rounded-circle"src="{{other_user.userprofile.pic.cdn_url}}" width="250px" height="250px" alt="Profile photo">
+      {% else %}
+        <p class="alert alert-danger">No Profile Pic</p>        
+      {% endif %}
+      </div>
+      <div class="col-md-6">            
+        <div class="row">
+          <div class="col-md-8">
+            <h5>Username: {{other_user.username}}</h5>            
+            <h5>Email: {{other_user.email}}</h5>
+            <hr>
+            <h6><b>Status</b></h6>              
+            {% if other_user.userprofile.status %}
+              <p>{{other_user.userprofile.status}}</p>
+            {% else %}  
+              <p class="alert alert-danger"> No status</p>
+            {% endif %}    
+            <br>                        
+            <h6><b>Career</b></h6>
+            {% if other_user.userprofile.status %}
+              <p>{{other_user.userprofile.career}}</p>
+            {% else %}  
+              <p class="alert alert-danger"> No Career</p>              
+            {% endif %}
+          </div>
+          <div class="col-md-4">    
+            <h4>Followers: {{other_user.userprofile.followers.count}}</h6>        
+             <form action="{% url 'follow_user' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" name="user_id" value="{{other_user.userprofile.id}}" class="btn btn-outline-info">Follow</button>
+            </form>            
+          </div>
+        </div>
+      </div>    
+    </div>  
+    <hr>
+    <h4>Posts</h4>
+    <div class="row">
+    {% for post in posts %} 
+      <a href="/single_post/{{post.id}}">
+      <img src="{{post.image.cdn_url}}" style="margin-left:10px"width="250px" height="300px"alt="{{post.image_name}}">                                    
+      </a>
+      <br>      
+    {% endfor %}
+    </div>
+  </div>  
+{% endblock content %}
+  
+
+
