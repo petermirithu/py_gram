@@ -1,3 +1,41 @@
-body{
-background-color: coral;
+.button {
+  display: inline-flex;
+  height: 40px;  
+  width: 150px;
+  border: 2px solid black;
+  margin: 10px 10px 10px 10px;
+  color: #BFC0C0;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  letter-spacing: 1.5px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+#button-6 {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: rgb(9, 188, 194);
+  border: 2px solid rgb(0, 0, 0);
+}
+#button-6 a {
+  position: relative;
+  color: black;
+  transition: all .45s ease-Out;
+}
+#button-6::before{  
+  position: absolute;
+  content: '';
+  height: 0;
+  width: 0;
+  top: 0;
+  right: 0;  
+  background: linear-gradient(225deg, rgb(52, 41, 66) 45%, #aaa 50%, #ccc 56%, rgb(255, 255, 255) 80%);    
+  transition-duration: 0.3s;    
+}
+#button-6:hover:before{ 
+  width: 25px;
+  height: 25px;
 }
