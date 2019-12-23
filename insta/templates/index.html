@@ -2,11 +2,27 @@
 
 {% block content %}
 <div class="container">
+  <a class="btn btn-outline-danger" href="{% url 'newPost' %}">New Post</a>
   <div class="row">
-    <div class="col-md-8">
-    <h1>Py_Gram</h1>
+    <div class="col-md-6">
+      <h1>Py_Gram</h1>
+      {% for post in posts %}
+        <div class="card">
+          <div class="card-body">
+            <img src="{{post.image.cdn_url}}" width="400px" heigth="250px" alt="{{post.image_name}}">
+          </div>
+          <div class="card-footer">
+            {% autoescape on %}
+            <h6>{{post.caption|safe}}</h6>
+            {% endautoescape %}
+            <h6>Like </h6>
+            <a class="btn btn-outline-warning" href="/single_post/{{post.id}}">Comment</a>
+          </div>          
+        </div>
+      {% endfor %}
+
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
     <h2>Py_Gram stories</h2>
     </div>
   <div>
