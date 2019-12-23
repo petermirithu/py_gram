@@ -46,7 +46,7 @@ class ImagePost(models.Model):
     '''
     function that gets all images posted
     '''    
-    posts=cls.objects.order_by('-posted_on')
+    posts=cls.objects.order_by('-id')
     return posts
 
   @classmethod
@@ -64,6 +64,14 @@ class ImagePost(models.Model):
     '''
     image_id=cls.objects.filter(id=imageId)
     return image_id
+
+  @classmethod
+  def get_user_posts(cls,user_id):
+    '''
+    function that gets user's posts
+    '''
+    posts=cls.objects.filter(posted_by__id__contains=user_id).order_by('-id')
+    return posts
 
 class Comments(models.Model):
   '''
