@@ -3,7 +3,8 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">                 
+  <h4><b><i><a href="/user/{{post.posted_by}}">{{post.posted_by}}</a></i></b></h4>       
+  <div class="row">          
     <div class="col-md-6">
       <img src="{{post.image.cdn_url}}" width="400px" height="450px"alt="{{post.image_name}}">          
     </div>  
@@ -15,10 +16,9 @@
             <h6>{{post.caption|safe}}</h6>
           {% endautoescape %}
         </div>                
-        <div class="card-footer">
-          <p>Posted by: {{post.posted_by}}</p>
+        <div class="card-footer">          
           <p>Posted on: {{post.posted_on}}</p>
-          <p>Likes </p>
+          <p>Likes: {{post.likes.count}}</p>
           <p>Comments: {{comments|length}}</p>              
         </div>  
       </div>  
