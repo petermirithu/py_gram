@@ -11,18 +11,11 @@ class UserProfile(models.Model):
   status=models.CharField(max_length=1000,blank=True)  
   pic=ImageField(blank=True,manual_crop='')
   career=models.CharField( max_length=100,blank=True)
+  followers=models.ManyToManyField(User, related_name="followers",blank=True)
 
   def __str__(self):
     return self.user.username  
-
-class likes(models.Model):
-  '''
-  class that defines the number of likes per post
-  '''  
-  likes=models.IntegerField()  
-
-  def __str__(self):
-    return self.likes
+  
 
 
 class ImagePost(models.Model):
@@ -32,6 +25,7 @@ class ImagePost(models.Model):
   image=ImageField(blank=True,manual_crop='')
   image_name=models.CharField(max_length=50)
   caption=HTMLField()
+  likes=models.ManyToManyField(User,related_name="likes",blank=True)
   posted_by=models.ForeignKey(User, on_delete=models.CASCADE)
   posted_on=models.DateField(auto_now_add=True)
 
@@ -92,7 +86,6 @@ class Comments(models.Model):
     '''
     comments=cls.objects.filter(image_id__in=id)
     return comments
-
 
 
 
