@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">    
+{% endblock styles %}
+
 
 {% block content %}
 <div class="container">
@@ -7,7 +15,9 @@
     <div class="col-md-6">
       <h1>Py_Gram</h1>
       {% for post in posts %}
-        <div class="card">
+        <div class="underline"></div>
+        <div class="card">       
+          <h4><b><i>{{post.posted_by}}</i></b></h4>
           <div class="card-body">
             <img src="{{post.image.cdn_url}}" width="400px" heigth="250px" alt="{{post.image_name}}">
           </div>
@@ -16,9 +26,14 @@
             <h6>{{post.caption|safe}}</h6>
             {% endautoescape %}
             <h6>Like </h6>
-            <a class="btn btn-outline-warning" href="/single_post/{{post.id}}">Comment</a>
+            <div class="button" id="button-7">
+              <div id="dub-arrow"></div>
+              <a href="/single_post/{{post.id}}">Comment</a>                
+            </div>      
+
           </div>          
         </div>
+        <br>
       {% endfor %}
 
     </div>
