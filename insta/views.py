@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib import auth
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
   '''
@@ -15,7 +16,8 @@ def home(request):
   '''
   posts=ImagePost.get_images_all()
   return render(request,'index.html',{"posts":posts})
-
+  
+@login_required(login_url="/accounts/login/")
 def logout_request(request):
   '''
   view function renders home page once logout
@@ -112,20 +114,56 @@ def follow_user(request):
   function that adds a user to follow field when he/she followers another user
   '''
   follow=get_object_or_404(UserProfile,id=request.POST.get('user_id'))
-  follow.followers.add(request.user)
-  print("*****************************************************")
-  print(f'{follow}')
-  print(f'{request.user}')
-  print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+  follow.followers.add(request.user)  
   return redirect('Home')
 
+@login_required(login_url="/accounts/login/")
 def others_profile(request, username):
   '''
   view function that renders other users profile page
   '''
   other_user=User.objects.get(username=username)
   title=other_user.username
-  posts=ImagePost.get_user_posts(other_user.id)   
+  posts=ImagePost.get_user_posts(other_user.id)       
   return render(request,'others_profile.html',{"title":title,"posts":posts,"other_user":other_user}) 
+
+@login_required(login_url="/accounts/login/")
+def search(request):
+  '''
+  view function that render search template with results  
+  '''
+  if 'search_term' in request.GET and request.GET["search_term"]:
+
+    search_term=request.GET.get('search_term')
+    try:
+      posts_by_name=ImagePost.get_posts_by_name(search_term)
+      message=f'{search_term}'
+      title="Searched"
+
+      if posts_by_name:  
+        return render(request, 'search.html',{"posts":posts_by_name,"title":title,"message":message})
+    except ObjectDoesNotExist:        
+      message=f'{search_term}'
+      title="Searched"
+      return render(request, 'search.html',{"title":title,"message":message})
+
+    try:
+      found_user=User.objects.get(username=search_term)      
+      user_posts=ImagePost.get_user_posts(found_user.id)
+      print('******************************')
+      print(found_user.username)
+      print('******************************')
+      message=f'{search_term}'
+      title="Searched"
+      if user_posts or follow_user:                                        
+        return render(request, 'search.html',{"user_f":found_user,"posts":user_posts,"title":title,"message":message})
+    except ObjectDoesNotExist:
+      message=f'{search_term}'
+      title="Searched"
+      return render(request, 'search.html',{"title":title,"message":message})   
+    
+    
+
+
 
 
