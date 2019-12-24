@@ -16,6 +16,15 @@ class UserProfile(models.Model):
   def __str__(self):
     return self.user.username  
   
+  
+
+  @classmethod
+  def search_user(cls,username):    
+    '''    
+    function that searches for a user
+    '''    
+    found=User.objects.get(username=username)
+    return found
 
 
 class ImagePost(models.Model):
@@ -65,6 +74,13 @@ class ImagePost(models.Model):
     function that gets user's posts
     '''
     posts=cls.objects.filter(posted_by__id__contains=user_id).order_by('-id')
+    return posts
+  @classmethod
+  def get_posts_by_name(cls, search_term):
+    '''
+    function tha searches for posts with a similar name
+    '''
+    posts=cls.objects.filter(image_name__icontains=search_term)
     return posts
 
 class Comments(models.Model):
