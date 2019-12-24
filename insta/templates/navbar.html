@@ -1,64 +1,18 @@
-<style>
-  #bar{
-  background-color: black;
-}
-.button {
-  display: inline-flex;
-  height: 40px;  
-  width: 150px;
-  border: 2px solid #BFC0C0;
-  margin: 10px 10px 10px 10px;
-  color: #BFC0C0;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  letter-spacing: 1.5px;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.button-5 {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all .5s ease-Out;
-}
-.button-5 a {
-  position: relative;
-  transition: all .45s ease-Out; 
-}
+{% load static %}
+{% load bootstrap4 %}
 
-#translate {
-  transform: rotate(50deg);
-  width: 100%;
-  height: 250%;
-  left: -200px;
-  top: -30px;
-  background: white;
-  position: absolute;
-  transition: all .5s ease-Out;
-}
-.button-5:hover  {    
-  background-color: black;
-  transform: translateY( -7px); 
-  transition: all .8s ease-Out;  
-}
-.button-5:hover #translate {
-  left: 0;
-}
-.button-5:hover a {    
-  color: black;
-}
-</style>
-<nav id="bar" class="navbar  navbar-expand-lg navbar-light">
-  <div class="button button-5">
-    <div id="translate"></div>
-      <a style="color:lightblue" class="navbar-brand">Py_Gram</a>      
-  </div>  
-  <button style="color:white" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+{% block styles %}
+  {% bootstrap_css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">            
+  <link rel="stylesheet" href="{% static 'css/sign_base.css'%}">
+{% endblock styles %}
+
+<nav id="bar" class="navbar sticky-top  navbar-expand-lg navbar-light">    
+  <a style="background-color:lightblue;border-radius:4px 0px 4px 0px" class="navbar-brand"><img src="https://www.sambacouture.com/wp-content/uploads/2017/12/cropped-Sambacouture-logo-icon-1.png" width="80px" height="40px"></a>        
+  <button style="background-color:white" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  <div class="navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
         <div class="button button-5">
@@ -70,18 +24,18 @@
         <a class="nav-link"></a>
       </li>                                                                                                   
       <li>
-        <form class="navbar-form" role='search' action="">
+        <form class="form-inline" role='search' action="{% url 'search' %}">
           <input type="text" class="form-control" placeholder="Search" name="search_term">            
-          <button style="" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>            
+          <button style="background-color:lightblue" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>            
         </form>  
       </li>                                                                   
     </ul>
     <ul class="navbar-nav ml-auto">  
       {% if user.is_authenticated %} 
-        {% if user.userprofile.pic %}
-          <img class="rounded-circle"src="{{user.userprofile.pic.cdn_url}}" width="40px" height="40px"alt="Profile photo">
+        {% if user.userprofile.pic %}          
+          <img class="rounded-circle"src="{{user.userprofile.pic.cdn_url}}" width="40px" height="40px"alt="Profile photo">                              
         {% else %}
-          <p>{{request.user.username}}</p>
+          <img class="rounded-circle"src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLLiVPh45RkmE-FnMz_mZBOwcrK2BemrMoJ5I5SRSa5zHuMy3L&s" width="40px" height="40px" alt="Profile photo">
         {% endif %}          
         <div class="button button-5">
           <div id="translate"></div>              
@@ -98,8 +52,73 @@
             <a style="color:lightblue" class="nav-link" href="/accounts/login/">Sign In</a>          
         </div> 
         </li>   
-      {% endif %}       
-      
+      {% endif %}             
     </ul>
   </div>
 </nav>
+
+<div>
+  <div id="myNav" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+      <div class="navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">            
+            <a style="background-color:lightblue;border-radius:4px 0px 4px 0px" class="navbar-brand"><img src="https://www.sambacouture.com/wp-content/uploads/2017/12/cropped-Sambacouture-logo-icon-1.png" width="80px" height="40px"></a>        
+          </li>                                                                                                   
+          <li class="nav-item active">
+            <div class="button button-5">
+              <div id="translate"></div>
+                <a style="color:lightblue" class="nav-link" href="{% url 'Home' %}">Home</a>          
+            </div>        
+          </li>     
+          <li>
+            <div id="form">
+              <form class="form-inline" role='search' action="{% url 'search' %}">
+                <input type="text" class="form-control" placeholder="Search" name="search_term">            
+                <button style="background-color:lightblue" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>            
+              </form>  
+            </div>
+          </li>       
+          <li>                                                            
+          {% if user.is_authenticated %} 
+            {% if user.userprofile.pic %}          
+              <img class="rounded-circle"src="{{user.userprofile.pic.cdn_url}}" width="40px" height="40px"alt="Profile photo">                              
+            {% else %}
+              <img class="rounded-circle"src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLLiVPh45RkmE-FnMz_mZBOwcrK2BemrMoJ5I5SRSa5zHuMy3L&s" width="40px" height="40px" alt="Profile photo">
+            {% endif %}          
+            <div class="button button-5">
+              <div id="translate"></div>              
+                <a style="color:lightblue" class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </div> 
+            <div class="button button-5">
+              <div id="translate"></div>              
+                <a style="color:lightblue" class="nav-link" href="{% url 'logout' %}">Logout</a>          
+            </div> 
+          {% else %}
+            <li class="nav-item">
+              <div class="button button-5">
+                <div id="translate"></div>              
+                  <a style="color:lightblue" class="nav-link" href="/accounts/login/">Sign In</a>          
+              </div> 
+            </li>   
+          {% endif %}  
+          </li>           
+        </ul>
+        <ul class="navbar-nav ml-auto">  
+          
+        </ul>
+      </div>      
+    </div>  
+    <div id="mnbar">
+      <span style="font-size:40px;cursor:pointer" class="menubar" id="menubar"onclick="openNav()">&#9776;</span>
+    </div>  
+    <script>
+      function openNav() {
+        document.getElementById("myNav").style.width = "100%";
+      }
+      function closeNav() {
+        document.getElementById("myNav").style.width = "0%";
+      }     
+    </script>
+</div>
