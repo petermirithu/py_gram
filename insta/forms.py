@@ -8,7 +8,7 @@ class UpdateProfileForm(forms.ModelForm):
   '''
   class Meta:    
     model=UserProfile
-    exclude=['user']
+    exclude=['user','followers']
 
 class UserUpdateForm(forms.ModelForm):
   '''
@@ -24,7 +24,7 @@ class ImagePostForm(forms.ModelForm):
   '''
   class Meta:
     model=ImagePost
-    exclude=['posted_on','posted_by']
+    exclude=['posted_on','posted_by','likes']
 class ImageCommentForm(forms.ModelForm):
   '''
   class that defines how the comment form shall look like
