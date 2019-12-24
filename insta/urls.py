@@ -12,4 +12,5 @@ urlpatterns = [
     url(r"^like/$",views.like_post,name="like_post"),
     url(r"^follow/$",views.follow_user,name="follow_user"),
     path('user/<username>',views.others_profile,name="otherProfile"),
+    url(r'^search/$',views.search,name="search"),
 ]
