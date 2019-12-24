@@ -2,39 +2,48 @@
 {% load static %}
 {% load bootstrap4 %}
 
-{% block styles %}
-  {% bootstrap_css %}
+{% block styles %}  
+  {{block.super}} 
   <link rel="stylesheet" href="{% static 'css/home.css' %}">    
 {% endblock styles %}
 
 
 {% block content %}
 <div class="container">
-  <a class="btn btn-outline-danger" href="{% url 'newPost' %}">New Post</a>
+  <div class="buttonR" id="button-2">
+    <div id="slide"></div>
+    <a style="color:blue" href="{% url 'newPost' %}">New Post</a>    
+  </div>
   <div class="row">
     <div class="col-md-6">
       <h1>Py_Gram</h1>
       {% for post in posts %}
         <div class="underline"></div>
-        <div class="card">       
+        <div class="card bg-transparent">       
           <h4><b><i><a href="/user/{{post.posted_by}}">{{post.posted_by}}</a></i></b></h4>
           <div class="card-body">
-            <img src="{{post.image.cdn_url}}" width="400px" heigth="250px" alt="{{post.image_name}}">
+            <a href="/single_post/{{post.id}}"><img class="posted_image"src="{{post.image.cdn_url}}" width="400px" heigth="250px" alt="{{post.image_name}}"></a>
           </div>
           <div class="card-footer">
             {% autoescape on %}
             <h6>{{post.caption|safe}}</h6>
             {% endautoescape %}
-            <h6>Likes: {{post.likes.count}}</h6>
-            <form action="{% url 'like_post' %}" method="post">
-              {% csrf_token %}
-              <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-outline-info">Like</button>
-            </form>
-            <div class="button" id="button-7">
-              <div id="dub-arrow"></div>
-              <a href="/single_post/{{post.id}}">Comment</a>                
-            </div>      
-
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <h6>Likes: {{post.likes.count}}</h6>
+                <form action="{% url 'like_post' %}" method="post">
+                  {% csrf_token %}
+                  <button class="like" type="submit" name="post_id" value="{{post.id}}"><img  width="45px" height="40px"src="https://www.freepngimg.com/thumb/heart/67620-heart-instagram-icons-button-computer-like.png"></button>
+                </form>
+              </div>
+              <div class="col-md-6">
+                <div class="button" id="button-7">
+                  <div id="dub-arrow"></div>
+                  <a href="/single_post/{{post.id}}">Comment</a>                
+                </div>      
+              </div>
+            </div>
           </div>          
         </div>
         <br>
@@ -43,8 +52,8 @@
     </div>
     <div class="col-md-6">
       <h2>Py_Gram stories</h2>
-      {% for story in stories %}
-      
+      {% for post in posts %}        
+        <a href="/single_post/{{post.id}}"><img class="image" src="{{post.image.cdn_url}}" width="100px" heigth="150px" alt="{{post.image_name}}"></a>
       {% endfor %}
     </div>
   <div>
