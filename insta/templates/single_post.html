@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
+
+{% block styles %}
+  {{block.super}} 
+  <link rel="stylesheet" href="{% static 'css/single_post.css' %}">    
+{% endblock styles %}
 
 {% block content %}
 <div class="container">
   <h4><b><i><a href="/user/{{post.posted_by}}">{{post.posted_by}}</a></i></b></h4>       
   <div class="row">          
     <div class="col-md-6">
-      <img src="{{post.image.cdn_url}}" width="400px" height="450px"alt="{{post.image_name}}">          
+      <img class="image" src="{{post.image.cdn_url}}" width="400px" height="450px"alt="{{post.image_name}}">          
     </div>  
     <div class="col-md-6">  
-      <div class="card">        
+      <div class="card cardX">        
         <div class="card-header"><h3>{{post.image_name}}</h3></div>
         <div class="card-body">
           {% autoescape on %}
@@ -18,26 +24,33 @@
         </div>                
         <div class="card-footer">          
           <p>Posted on: {{post.posted_on}}</p>
-          <p>Likes: {{post.likes.count}}</p>
           <p>Comments: {{comments|length}}</p>              
+          <hr>
+          <p>Likes: {{post.likes.count}}</p>
+            <form action="{% url 'like_post' %}" method="post">
+              {% csrf_token %}
+              <button class="like" type="submit" name="post_id" value="{{post.id}}"><img  width="45px" height="40px"src="https://www.freepngimg.com/thumb/heart/67620-heart-instagram-icons-button-computer-like.png"></button>
+            </form>
         </div>  
       </div>  
     </div>    
   </div>  
-  <h4>Add a comment</h4>
+  <hr>
+  <h4><u>Add a comment</u></h4>
   <form action="/single_post/{{post.id}}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
     <button type="submit" class="btn btn-outline-primary">Post</button>
   </form>
-  <h3>Comments</h3>     
+  <hr>
+  <h3><u>Comments</u></h3>     
   <div class="row">  
     <div class="col-md-12">
       {% if comments %}
         {% for comment in comments %}        
           <div class="card bg-transparent">
-            <h6>{{comment.body}}</h6>
-            <p><small class="text-dark">{{comment.posted_by}}</small></p>              
+            <h5>{{comment.body}}</h5>
+            <p><small class="text-dark"><i>{{comment.posted_by}}</i></small></p>              
           </div>
           <br>        
         {% endfor %}
