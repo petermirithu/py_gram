@@ -1,0 +1,150 @@
+body{        
+  background-image: linear-gradient(to right top, #ffffff, #f5f5f8, #ecebf1, #e2e1eb, #d9d7e4, #c3bfcc, #aea8b4, #99929d, #726b72, #4c474a, #292627, #000000);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-attachment: fixed;
+}
+/* navbar */
+#bar{
+  background-color: black;
+}
+.button {
+  display: inline-flex;
+  height: 40px;  
+  width: 150px;
+  border: 2px solid #BFC0C0;
+  margin: 10px 10px 10px 10px;
+  color: #BFC0C0;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  letter-spacing: 1.5px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.button-5 {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all .5s ease-Out;
+}
+.button-5 a {
+  position: relative;
+  transition: all .45s ease-Out; 
+}
+
+#translate {
+  transform: rotate(50deg);
+  width: 100%;
+  height: 250%;
+  left: -200px;
+  top: -30px;
+  background: white;
+  position: absolute;
+  transition: all .5s ease-Out;
+}
+.button-5:hover  {    
+  background-color: black;
+  transform: translateY( -7px); 
+  transition: all .8s ease-Out;  
+}
+.button-5:hover #translate {
+  left: 0;
+}
+.button-5:hover a {    
+  color: black;
+}
+
+/* side bar */
+#form{
+  margin-left: 40vw;
+}
+#menubar{
+  position: fixed;
+  bottom: -10px;
+  right: 10px;  
+  background-color: black;
+  width:50px;
+  animation: fadeIn .90s infinite alternate;  
+  border-radius: 10px 10px 10px 10px;
+
+}
+#mnbar{  
+  animation: beat 1s infinite alternate;  
+  position: fixed;
+  bottom: -0px;
+  right: 10px;
+}
+@keyframes fadeIn{
+  0%{
+    opacity: 0.33;
+    transform: scale(.89);
+  }
+}
+@keyframes beat{
+	to { transform: scale(0.99); }
+}
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;  
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+.overlay-content div:hover{
+  color:white;
+}
+.overlay a {
+  padding: 8px;
+  text-decoration: none;  
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+#myNav{
+  display: none;
+}
+@media only screen and (max-width: 1000px){
+  #bar {
+    display: none;
+  }  
+  #myNav{
+    display: block;;    
+  }
+}
