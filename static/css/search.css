@@ -1,0 +1,9 @@
+.posted_image{
+  border-radius: 0px 30px 0px 30px;
+  box-shadow: 5px 5px black;
+  transition: all .8s ease-Out; 
+}
+.posted_image:hover{
+  transform: translateY( -7px); 
+  transition: all .8s ease-Out; 
+}
