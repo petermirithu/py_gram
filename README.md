@@ -1,10 +1,10 @@
-# [Py_Gram]()
+# [Py_Gram](https://pygram254.herokuapp.com/)
 
 This project was generated with [Django](https://www.djangoproject.com) version 2.2.8 <br>
 
 ![picture](pygram.png)
 
-To view the site Click [Py_Gram]()
+To view the site Click [Py_Gram](https://pygram254.herokuapp.com/)
 
 ## Author: 
   * [Peter Mirithu](https://github.com/petermirithu/py_gram)
