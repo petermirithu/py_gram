@@ -95,7 +95,7 @@ def single_post(request, id):
 
   image_posted=ImagePost.single_image(id)  
   imageId=ImagePost.get_image_id(id)
-  comments=Comments.get_user_comments(imageId)
+  comments=Comments.get_post_comments(imageId)
       
   return render(request,'single_post.html',{"form":form,"comments":comments,"post":image_posted})      
 
