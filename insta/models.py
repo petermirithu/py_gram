@@ -26,6 +26,17 @@ class UserProfile(models.Model):
     found=User.objects.get(username=username)
     return found
 
+  def save_profile(self):
+    '''
+    function that saves a user's profile
+    '''
+    self.save()
+
+  def delete_profile(self):
+    '''
+    function that deletes a user profile
+    '''
+    self.delete()
 
 class ImagePost(models.Model):
   '''
@@ -43,6 +54,29 @@ class ImagePost(models.Model):
 
   def __str__(self):
     return self.image_name  
+
+  def save_post(self):
+    '''
+    function that saves a new post
+    '''
+    self.save()
+
+  def delete_post(self):
+    '''
+    function that deletes a post
+    '''
+    self.delete()
+
+  @classmethod
+  def update_caption(cls,image_id, text):
+    '''
+    function that updates a caption
+    '''
+    searched=cls.objects.get(id=image_id)
+    searched.caption=text
+    searched.save()
+    return searched
+
 
   @classmethod
   def get_images_all(cls):
@@ -96,13 +130,35 @@ class Comments(models.Model):
     return self.posted_by
 
   @classmethod
-  def get_user_comments(cls, id):
+  def get_post_comments(cls, id):
     '''
     function that gets all comments
     '''
     comments=cls.objects.filter(image_id__in=id)
     return comments
 
+  def save_comment(self):
+    '''
+    function that saves a new comment
+    '''
+    self.save()
+
+  def delete_comment(self):
+    '''
+    function that deletes a comment
+    '''
+    self.delete()
+
+  @classmethod
+  def update_caption(cls,comment_id, text):
+    '''
+    function that updates a comment
+    '''
+    searched=cls.objects.get(id=comment_id)
+    searched.body=text
+    searched.save()
+    return searched
+    
 
 
 
