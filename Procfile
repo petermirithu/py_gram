@@ -1,1 +1,1 @@
-web: gunicorn Gallery.wsgi --log-file -
+web: gunicorn py_gram.wsgi --log-file -
