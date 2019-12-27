@@ -2,13 +2,15 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from .models import UserProfile,ImagePost,Comments
-from .forms import UpdateProfileForm,UserUpdateForm,ImagePostForm,ImageCommentForm
+from .forms import UpdateProfileForm,UserUpdateForm,ImagePostForm,ImageCommentForm,SignupForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.contrib import auth
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from .email import send_welcome_email
+
 
 def home(request):
   '''
@@ -161,8 +163,24 @@ def search(request):
       message=f'{search_term}'
       title="Searched"
       return render(request, 'search.html',{"title":title,"message":message})   
-    
-    
+
+def signup(request):
+  '''
+  view function to send emails to new users when they register
+  '''
+  if request.method=='POST':
+    form=SignupForm(request.POST)
+    if form.is_valid():
+      form.save()
+      name=form.cleaned_data['username']
+      email=form.cleaned_data['email']      
+      send_welcome_email(name,email)
+      HttpResponseRedirect('Home')
+
+  else:
+    form=SignupForm()
+
+  return render(request,'registration/registration_form.html',{"form":form})        
 
 
 

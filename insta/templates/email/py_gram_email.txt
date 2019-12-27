@@ -1,0 +1,11 @@
+Hello {{name}}
+
+Welcome to Py_Gram.
+Hope you enjoy connecting with your friends here.!!!!
+    Have a blast.
+
+from,
+CEO:Pyra
+
+
+
