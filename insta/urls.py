@@ -13,4 +13,5 @@ urlpatterns = [
     url(r"^follow/$",views.follow_user,name="follow_user"),
     path('user/<username>',views.others_profile,name="otherProfile"),
     url(r'^search/$',views.search,name="search"),
+    url(r'accounts/register/$',views.signup,name="email"),
 ]
